@@ -1,7 +1,7 @@
 package maple.statupgrade;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import maple.statupgrade.dto.User;
+import maple.statupgrade.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -90,8 +90,8 @@ public class ConnectTest {
             }
             in.close();
             ObjectMapper om = new ObjectMapper();
-            User user = om.readValue(response.toString(), User.class);
-            System.out.println(user.getId());
+            UserDto userDto = om.readValue(response.toString(), UserDto.class);
+            System.out.println(userDto.getId());
         } catch (Exception exception) {
             System.out.println(exception);
         }
@@ -114,13 +114,13 @@ public class ConnectTest {
             String urlString = String.format("%s?character_name={characterName}", baseUrl);
 
             // HTTP GET 요청
-            User user = webClient.get()
+            UserDto userDto = webClient.get()
                     .uri(urlString, characterName)
                     .retrieve()
-                    .bodyToMono(User.class)
+                    .bodyToMono(UserDto.class)
                     .block(); // 블록킹 호출, 실제 사용시에는 subscribe 또는 다른 방식의 비동기 호출을 고려
 
-            System.out.println(user.getId());
+            System.out.println(userDto.getId());
         } catch (Exception exception) {
             System.out.println(exception);
         }
